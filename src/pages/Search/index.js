@@ -186,10 +186,11 @@ class SearchPage extends Component {
   handleSearch = () => {
     this.props.history.push(`/search/${this.state.search}`);
     this.getdata();
-  }
+  };
 
   componentDidMount() {
     this.getdata();
+    this.getVisible();
   }
 
   getdata = async () => {
@@ -279,6 +280,61 @@ class SearchPage extends Component {
     }
   };
 
+  getVisible = async () => {
+    const email = await localStorage.getItem("email");
+
+    getApi(`http://localhost:5000/api/visible/${email}`, () => {
+      this.props.history.push("/login");
+    }).then((dataApi) => {
+      console.log(dataApi.data.data.T);
+
+      this.setState({
+        title: dataApi.data.data.TITLE,
+        firstName: dataApi.data.data.FIRSTNAME,
+        lastName: dataApi.data.data.LASTNAME,
+        gender: dataApi.data.data.GENDER,
+        language: dataApi.data.data.LANGUAGE,
+        shirtSize: dataApi.data.data.SHIRT_SIZE,
+        university: dataApi.data.data.UNIVERSITY,
+        companyName: dataApi.data.data.COMPANY_NAME,
+        department: dataApi.data.data.DEPARTMENT,
+        jobTitle: dataApi.data.data.JOB_TITLE,
+        phone: dataApi.data.data.PHONE,
+        city: dataApi.data.data.CITY,
+        countryCode: dataApi.data.data.COUNTRY_CODE,
+        country: dataApi.data.data.COUNTRY,
+        postCode: dataApi.data.data.POSTAL_CODE,
+        state: dataApi.data.data.STATE,
+        streetAddress: dataApi.data.data.STREET_ADDRESS,
+        movieGenres: dataApi.data.data.MOVIE_GENRES,
+        carMark: dataApi.data.data.CAR_MARK,
+        money: dataApi.data.data.MONEY,
+        color: dataApi.data.data.COLOR,
+        temptitle: dataApi.data.data.TITLE,
+        tempfirstName: dataApi.data.data.FIRSTNAME,
+        templastName: dataApi.data.data.LASTNAME,
+        tempgender: dataApi.data.data.GENDER,
+        templanguage: dataApi.data.data.LANGUAGE,
+        tempshirtSize: dataApi.data.data.SHIRT_SIZE,
+        tempuniversity: dataApi.data.data.UNIVERSITY,
+        tempcompanyName: dataApi.data.data.COMPANY_NAME,
+        tempdepartment: dataApi.data.data.DEPARTMENT,
+        tempjobTitle: dataApi.data.data.JOB_TITLE,
+        tempphone: dataApi.data.data.PHONE,
+        tempcity: dataApi.data.data.CITY,
+        tempcountryCode: dataApi.data.data.COUNTRY_CODE,
+        tempcountry: dataApi.data.data.COUNTRY,
+        temppostCode: dataApi.data.data.POSTAL_CODE,
+        tempstate: dataApi.data.data.STATE,
+        tempstreetAddress: dataApi.data.data.STREET_ADDRESS,
+        tempmovieGenres: dataApi.data.data.MOVIE_GENRES,
+        tempcarMark: dataApi.data.data.CAR_MARK,
+        tempmoney: dataApi.data.data.MONEY,
+        tempcolor: dataApi.data.data.COLOR,
+      });
+    });
+  };
+
   render() {
     if (this.state.isLoading) return <MainLayout>loading...</MainLayout>;
 
@@ -297,7 +353,11 @@ class SearchPage extends Component {
             />
           </Form.Group>
 
-          <Button variant="primary" className="mr-3" onClick={this.handleSearch}>
+          <Button
+            variant="primary"
+            className="mr-3"
+            onClick={this.handleSearch}
+          >
             Submit
           </Button>
 

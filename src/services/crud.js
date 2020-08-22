@@ -15,6 +15,8 @@ export const getApi = async (url, callback) => {
         };
     } catch (error) {
         await localStorage.removeItem("token");
+        await localStorage.removeItem("email");
+
         await callback()
 
         return {
@@ -39,6 +41,8 @@ export const postApi = async (url, callback, data) => {
         };
     } catch (error) {
         await localStorage.removeItem("token");
+        await localStorage.removeItem("email");
+        
         await callback()
 
         return {

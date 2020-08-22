@@ -9,6 +9,8 @@ export const Login = async (email, password) => {
     });
 
     await localStorage.setItem("token", res.data.token);
+    await localStorage.setItem("email", res.data.email);
+
     return {
       data: res.data,
       success: true,
@@ -39,6 +41,8 @@ export const Register = async (email, password) => {
 
 export const Logout = async () => {
   await localStorage.removeItem("token");
+  await localStorage.removeItem("email");
+
   return {
     success: true,
   };

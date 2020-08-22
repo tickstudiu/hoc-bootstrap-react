@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-export const getApi = async url => {
+export const getApi = async (url, callback) => {
     const token = await localStorage.getItem("token");
     try {
         const res = await axios.get(url, {
             headers: {
-                authentication: token
+                authorization: token
             }
         });
 
@@ -14,6 +14,9 @@ export const getApi = async url => {
             success: true
         };
     } catch (error) {
+        await localStorage.removeItem("token");
+        await callback()
+        
         return {
             error: error.response,
             success: false
@@ -26,7 +29,7 @@ export const postApi = async (url, data) => {
     try {
         const res = await axios.post(url, data, {
             headers: {
-                authentication: token
+                authorization: token
             }
         });
 
@@ -47,7 +50,7 @@ export const patchApi = async (url, data) => {
     try {
         const res = await axios.patch(url, data, {
             headers: {
-                authentication: token
+                authorization: token
             }
         });
         return {
@@ -67,7 +70,7 @@ export const putApi = async (url, data) => {
     try {
         const res = await axios.put(url, data, {
             headers: {
-                authentication: token
+                authorization: token
             }
         });
         return {
@@ -87,7 +90,7 @@ export const deleteApi = async url => {
     try {
         const res = await axios.delete(url, {
             headers: {
-                authentication: token
+                authorization: token
             }
         });
         return {

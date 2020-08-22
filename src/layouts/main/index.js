@@ -11,10 +11,10 @@ class MainLayout extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col md={2}>
+          <Col md={2} className="bg-dark">
             <MenuComponent />
           </Col>
-          <Col md={10}>
+          <Col md={10} className="px-0">
             <HeaderComponent />
             <ContentComponent>{this.props.children}</ContentComponent>
             <FooterComponent>created by wanchalerm suksawat</FooterComponent>

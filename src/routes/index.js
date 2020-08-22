@@ -32,6 +32,22 @@ const indexRoutes = [
         path: '/search',
         component: PrivateRoute(SearchPage),
     },
+    {
+        name: 'search page',
+        path: '/search/page/:page',
+        component: PrivateRoute(SearchPage),
+    },
+    {
+        name: 'search page',
+        path: '/search/:word',
+        component: PrivateRoute(SearchPage),
+    },
+    {
+        name: 'search page',
+        path: '/search/:word/page/:page',
+        component: PrivateRoute(SearchPage),
+    },
 ];
+
 
 export default indexRoutes;

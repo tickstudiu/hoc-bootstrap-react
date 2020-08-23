@@ -196,15 +196,18 @@ class SearchPage extends Component {
   }
 
   getdata = async () => {
+    const email = await localStorage.getItem("email");
+
     if (this.props.match.params.word) {
       if (this.props.match.params.page) {
         postApi(
-          `http://localhost:5000/api/datas/page/${this.props.match.params.page}`,
+          `http://localhost:5000/api/datas/byNamebyPage/page/${this.props.match.params.page}`,
           () => {
             this.props.history.push("/login");
           },
           {
             text: this.state.search,
+            email: email,
           }
         )
           .then((dataApi) => {
@@ -221,12 +224,13 @@ class SearchPage extends Component {
           });
       } else {
         postApi(
-          `http://localhost:5000/api/datas`,
+          `http://localhost:5000/api/datas/byName`,
           () => {
             this.props.history.push("/login");
           },
           {
             text: this.state.search,
+            email: email,
           }
         )
           .then((dataApi) => {
@@ -244,11 +248,12 @@ class SearchPage extends Component {
       }
     } else {
       if (this.props.match.params.page) {
-        getApi(
-          `http://localhost:5000/api/datas/page/${this.props.match.params.page}`,
+        postApi(
+          `http://localhost:5000/api/datas/byPage/page/${this.props.match.params.page}`,
           () => {
             this.props.history.push("/login");
-          }
+          },
+          { email: email }
         )
           .then((dataApi) => {
             this.setState({
@@ -263,9 +268,13 @@ class SearchPage extends Component {
             });
           });
       } else {
-        getApi("http://localhost:5000/api/datas", () => {
-          this.props.history.push("/login");
-        })
+        postApi(
+          "http://localhost:5000/api/datas",
+          () => {
+            this.props.history.push("/login");
+          },
+          { email: email }
+        )
           .then((dataApi) => {
             this.setState({
               datas: dataApi.data.data,
@@ -288,7 +297,6 @@ class SearchPage extends Component {
     getApi(`http://localhost:5000/api/visible/${email}`, () => {
       this.props.history.push("/login");
     }).then((dataApi) => {
-
       this.setState({
         title: dataApi.data.data.TITLE,
         firstName: dataApi.data.data.FIRSTNAME,

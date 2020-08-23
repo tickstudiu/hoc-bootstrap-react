@@ -8,8 +8,8 @@ class HeaderComponent extends Component {
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="#home">Navbar</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
+          <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="/search">Search</Nav.Link>
           <Nav.Link>Logout</Nav.Link>
         </Nav>
       </Navbar>

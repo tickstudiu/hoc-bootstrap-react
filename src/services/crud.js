@@ -51,3 +51,28 @@ export const postApi = async (url, callback, data) => {
         };
     }
 };
+
+export const patchApi = async (url, callback, data) => {
+    const token = await localStorage.getItem("token");
+    try {
+        const res = await axios.patch(url, data, {
+            headers: {
+                authorization: token
+            }
+        });
+        return {
+            data: res.data,
+            success: true
+        };
+    } catch (error) {
+        await localStorage.removeItem("token");
+        await localStorage.removeItem("email");
+        
+        await callback()
+
+        return {
+            error: error.response,
+            success: false
+        };
+    }
+};

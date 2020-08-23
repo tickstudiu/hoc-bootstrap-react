@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Table, Form, Button, Modal } from "react-bootstrap";
 import MainLayout from "../../layouts/main";
-import { getApi, postApi } from "../../services/crud";
+import { getApi, postApi, patchApi } from "../../services/crud";
 
 class SearchPage extends Component {
   state = {
@@ -96,7 +96,7 @@ class SearchPage extends Component {
     });
   };
 
-  handleOK = () => {
+  handleOK = async () => {
     this.setState({
       show: false,
       title: this.state.temptitle,
@@ -122,39 +122,41 @@ class SearchPage extends Component {
       color: this.state.tempcolor,
     });
 
-    // let sqlQuery = {
-    //   title: this.state.temptitle,
-    //   firstName: this.state.tempfirstName,
-    //   lastName: this.state.templastName,
-    //   gender: this.state.tempgender,
-    //   language: this.state.templanguage,
-    //   shirtSize: this.state.tempshirtSize,
-    //   university: this.state.tempuniversity,
-    //   companyName: this.state.companyName,
-    //   department: this.state.tempcompanyName,
-    //   jobTitle: this.state.tempjobTitle,
-    //   phone: this.state.tempphone,
-    //   city: this.state.tempcity,
-    //   countryCode: this.state.tempcountryCode,
-    //   country: this.state.tempcountry,
-    //   postCode: this.state.temppostCode,
-    //   state: this.state.tempstate,
-    //   streetAddress: this.state.tempstreetAddress,
-    //   movieGenres: this.state.tempmovieGenres,
-    //   carMark: this.state.tempcarMark,
-    //   money: this.state.tempmoney,
-    //   color: this.state.tempcolor,
-    // };
+    const email = await localStorage.getItem("email");
 
-    // postApi(
-    //   `http://localhost:5000/api/datas/set`,
-    //   () => {
-    //     this.props.history.push("/login");
-    //   }, sqlQuery
-    // )
-    //   .then((dataApi) => {
-    //     console.log(dataApi)
-    //   })
+    patchApi(
+      "http://localhost:5000/api/visible/",
+      () => {
+        this.props.history.push("/login");
+      },
+      {
+        email: email,
+        title: this.state.title,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        gender: this.state.gender,
+        language: this.state.language,
+        shirtSize: this.state.shirtSize,
+        university: this.state.university,
+        companyName: this.state.companyName,
+        department: this.state.department,
+        jobTitle: this.state.jobTitle,
+        phone: this.state.phone,
+        city: this.state.city,
+        countryCode: this.state.countryCode,
+        country: this.state.country,
+        postCode: this.state.postCode,
+        state: this.state.state,
+        streetAddress: this.state.streetAddress,
+        movieGenres: this.state.movieGenres,
+        carMark: this.state.carMark,
+        money: this.state.money,
+        color: this.state.color,
+      }
+    ).then(() => {
+      this.getdata();
+      this.getVisible();
+    });
   };
 
   handleDefault = () => {
@@ -286,7 +288,6 @@ class SearchPage extends Component {
     getApi(`http://localhost:5000/api/visible/${email}`, () => {
       this.props.history.push("/login");
     }).then((dataApi) => {
-      console.log(dataApi.data.data.T);
 
       this.setState({
         title: dataApi.data.data.TITLE,

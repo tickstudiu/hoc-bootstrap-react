@@ -373,6 +373,7 @@ class SearchPage extends Component {
           <Button variant="primary" onClick={this.handleShow}>
             Visible Column
           </Button>
+
           <Modal show={this.state.show} onHide={this.handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Visible Column</Modal.Title>
